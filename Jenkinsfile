@@ -48,7 +48,8 @@ node {
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
 		sh 'ls'
 		sh './hello'
-		
+		sh 'curl -X PUT -u u:p -T hello "http://localhost:8081/artifactory/libs-release-local/hello"'
+		echo 'ARTIFACTORY UPLOAD SUCCESS'
 	/*	 stage 'Exec Maven'
           
                 rtMavenRun (
