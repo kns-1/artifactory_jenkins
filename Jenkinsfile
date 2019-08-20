@@ -44,11 +44,12 @@ node {
             stage 'Build'
 		sh 'git clone https://github.com/kns-1/jenkins_pipeline.git'
 		sh 'cd jenkins_pipeline'
-            sh 'go run hello.go'
+            sh 'go build hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
+		sh './hello.exe'
 
 		
-		 stage 'Exec Maven'
+	/*	 stage 'Exec Maven'
           
                 rtMavenRun (
                     tool: MAVEN_TOOL, // Tool name from Jenkins configuration
@@ -57,7 +58,7 @@ node {
                     deployerId: "MAVEN_DEPLOYER",
                     resolverId: "MAVEN_RESOLVER"
        )
-        
+        */
 		
         stage 'Publish build info'
          
