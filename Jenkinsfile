@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage ('Clone') {
             steps {
-                git branch: 'master', url: "https://github.com/jfrog/project-examples.git"
+                git branch: 'master', url: "https://github.com/kns-1/jenkins_pipeline.git"
             }
         }
 
@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage ('Exec Maven') {
+     /*   stage ('Exec Maven') {
             steps {
                 rtMavenRun (
                     tool: MAVEN_TOOL, // Tool name from Jenkins configuration
@@ -43,7 +43,22 @@ pipeline {
                     resolverId: "MAVEN_RESOLVER"
                 )
             }
-        }
+        }*/
+        
+        
+        
+           stage ('preTest')
+            sh 'go version'
+            sh 'go get -u github.com/golang/dep/...'
+            sh 'dep init'
+            
+            
+            stage ('Build')
+		sh 'git clone https://github.com/kns-1/jenkins_pipeline.git'
+		sh 'cd jenkins_pipeline'
+            sh 'go run hello.go'
+            echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
+            
 
         stage ('Publish build info') {
             steps {
