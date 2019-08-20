@@ -34,21 +34,6 @@ node {
                 )
           
 
-     /*   stage ('Exec Maven') {
-            steps {
-                rtMavenRun (
-                    tool: MAVEN_TOOL, // Tool name from Jenkins configuration
-                    pom: 'maven-example/pom.xml',
-                    goals: 'clean install',
-                    deployerId: "MAVEN_DEPLOYER",
-                    resolverId: "MAVEN_RESOLVER"
-                )
-            }
-        }*/
-        
-        
-        
-	  
             
 	    stage 'preTest'
             sh 'go version'
@@ -62,6 +47,18 @@ node {
             sh 'go run hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
 
+		
+		 stage 'Exec Maven'
+          
+                rtMavenRun (
+                    tool: MAVEN_TOOL, // Tool name from Jenkins configuration
+                    pom: 'hello.go',
+                    goals: 'clean install',
+                    deployerId: "MAVEN_DEPLOYER",
+                    resolverId: "MAVEN_RESOLVER"
+       )
+        
+		
         stage 'Publish build info'
          
                 rtPublishBuildInfo (
