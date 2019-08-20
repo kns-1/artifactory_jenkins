@@ -47,7 +47,7 @@ node {
             sh 'go build hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
 		sh 'ls'
-
+		sh './hello'
 		
 	/*	 stage 'Exec Maven'
           
