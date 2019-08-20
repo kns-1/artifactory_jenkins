@@ -1,8 +1,4 @@
 pipeline {
-     withMaven(maven: "mvn-3.6.0"){
-        git "https://github.com/jgitver/jgitver.git"
-        sh "mvn validate"
-    }
     agent any
     stages {
         stage ('Clone') {
@@ -14,9 +10,17 @@ pipeline {
         stage ('Artifactory configuration') {
             steps {
                 rtServer (
-                    id: "ARTIFACTORY_SERVER",
-                    url: "http://192.168.99.100:8081/artifactory",
-                    credentialsId: CREDENTIALS
+                     id: "Artifactory-1",
+    url: "http://192.168.99.100:8081/artifactory",
+    // If you're using username and password:
+    username: "admin",
+    password: "Navya@123"
+   
+    // If Jenkins is configured to use an http proxy, you can bypass the proxy when using this Artifactory server:
+    bypassProxy: true
+    // Configure the connection timeout (in seconds).
+    // The default value (if not configured) is 300 seconds:
+    timeout = 300
                 )
 
                 rtMavenDeployer (
