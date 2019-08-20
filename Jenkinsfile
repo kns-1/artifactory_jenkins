@@ -68,6 +68,6 @@ node {
                     serverId: "ARTIFACTORY_SERVER"
                 )
 	}
-    }
+    
     }
 }
