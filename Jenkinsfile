@@ -1,4 +1,8 @@
 pipeline {
+     withMaven(maven: "mvn-3.3.9"){
+        git "https://github.com/jgitver/jgitver.git"
+        sh "mvn validate"
+    }
     agent any
     stages {
         stage ('Clone') {
