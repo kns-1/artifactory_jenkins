@@ -17,12 +17,15 @@ node {
             stage 'Build'
 		sh 'git clone https://github.com/kns-1/jenkins_pipeline.git'
 		sh 'cd jenkins_pipeline'
-            sh 'go run hello.go'
+            sh 'go build hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
+		sh 'curl -X PUT -u u:p -T hello.exe "http://localhost:8081/artifactory/libs-release-local/hello.exe"'
+		echo 'ARTIFACTORY UPLOAD SUCCESS'
+	    
             
             stage 'Deploy'
             // Do nothing.
-	    
+		
         }
     }
 }
