@@ -47,17 +47,23 @@ pipeline {
         
         
         
-           stage ('preTest')
+	    stage ('preTest') {
+		    steps {
             sh 'go version'
             sh 'go get -u github.com/golang/dep/...'
             sh 'dep init'
+		    } 
+	    }
             
             
-            stage ('Build')
+	    stage ('Build') {
+		    steps {
 		sh 'git clone https://github.com/kns-1/jenkins_pipeline.git'
 		sh 'cd jenkins_pipeline'
             sh 'go run hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
+		    }
+	    }
             
 
         stage ('Publish build info') {
