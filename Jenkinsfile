@@ -46,7 +46,7 @@ node {
 		sh 'cd jenkins_pipeline'
             sh 'go build hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
-		sh './hello.exe'
+		sh 'ls'
 
 		
 	/*	 stage 'Exec Maven'
