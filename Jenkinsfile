@@ -1,15 +1,16 @@
-pipeline {
-    agent any
-    stages {
+node {
+	 def root = tool name: 'Go1.8', type: 'go'
+    ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/grugrut/golang-ci-jenkins-pipeline") {
+        withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/", "PATH+GO=${root}/bin"]) {
+            env.PATH="${GOPATH}/bin:$PATH"
 	  		 
-        stage ('Clone') {
-            steps {
+        stage 'Clone'
+           
                 git branch: 'master', url: "https://github.com/kns-1/jenkins_pipeline.git"
-            }
-        }
+        
 
-        stage ('Artifactory configuration') {
-            steps {
+        stage 'Artifactory configuration'
+           
                 rtServer (
                      id: "ARTIFACTORY_SERVER",
     url: "http://192.168.99.100:8081/artifactory",
@@ -31,8 +32,7 @@ pipeline {
                     releaseRepo: "libs-release",
                     snapshotRepo: "libs-snapshot"
                 )
-            }
-        }
+          
 
      /*   stage ('Exec Maven') {
             steps {
@@ -47,36 +47,27 @@ pipeline {
         }*/
         
         
-         def root = tool name: 'Go1.8', type: 'go'
-    ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/grugrut/golang-ci-jenkins-pipeline") {
-        withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/", "PATH+GO=${root}/bin"]) {
-            env.PATH="${GOPATH}/bin:$PATH"
-	    stage ('preTest') {
-		    steps {
+        
+	  
+            
+	    stage 'preTest'
             sh 'go version'
             sh 'go get -u github.com/golang/dep/...'
             sh 'dep init'
-		    } 
-	    }
             
             
-	    stage ('Build') {
-		    steps {
+            stage 'Build'
 		sh 'git clone https://github.com/kns-1/jenkins_pipeline.git'
 		sh 'cd jenkins_pipeline'
             sh 'go run hello.go'
             echo 'SUCCESSFUL BUILD of GOLANG APPLICATION'
-		    }
-	    }
-	}
-    }
 
-        stage ('Publish build info') {
-            steps {
+        stage 'Publish build info'
+         
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
-            }
-        }
+	}
+    }
     }
 }
