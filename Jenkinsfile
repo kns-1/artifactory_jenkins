@@ -58,13 +58,15 @@ node {
                     deployerId: "MAVEN_DEPLOYER",
                     resolverId: "MAVEN_RESOLVER"
        )
-        */
+        
 		
         stage 'Publish build info'
          
                 rtPublishBuildInfo (
                     serverId: "ARTIFACTORY_SERVER"
                 )
+	*/
+	
 	}
     
     }
