@@ -15,11 +15,7 @@ pipeline {
     // If you're using username and password:
     username: "admin",
     password: "Navya@123"
-   
-     // Configure the connection timeout (in seconds).
-    // The default value (if not configured) is 300 seconds:
-    timeout = 300
-                )
+    )
 
                 rtMavenDeployer (
                     id: "MAVEN_DEPLOYER",
